@@ -19,6 +19,15 @@ jobs:
           gradle-version: '8.7'
       - name: Unzip project
         run: unzip -q -o project.zip -d src
+      - name: Add YAMNet model
+        run: |
+          if [ -f yamnet.tflite ]; then
+            mkdir -p src/app/src/main/assets
+            cp yamnet.tflite src/app/src/main/assets/yamnet.tflite
+            echo "model copied"
+          else
+            echo "no model file"
+          fi
       - name: Build
         working-directory: src
         run: gradle assembleDebug --no-daemon
